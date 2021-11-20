@@ -21,6 +21,6 @@ public class PostService {
         postToSave.setTopText(postResponse.getTopText());
         postToSave.setBottomText(postResponse.getBottomText());
         postToSave.setImagePath(postResponse.getImagePath());
-        postRepository.addPost(postToSave);
+        postRepository.save(postToSave);
     }
 }
