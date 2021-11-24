@@ -6,11 +6,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
-@Table
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "posts_db")
 public class PostEntity {
 
     @Id
@@ -25,14 +26,4 @@ public class PostEntity {
 
     @Column
     private String imagePath;
-
-    @Override
-    public String toString() {
-        return "PostEntity{" +
-                "id=" + id +
-                ", topText='" + topText + '\'' +
-                ", bottomText='" + bottomText + '\'' +
-                ", imagePath='" + imagePath + '\'' +
-                '}';
-    }
 }

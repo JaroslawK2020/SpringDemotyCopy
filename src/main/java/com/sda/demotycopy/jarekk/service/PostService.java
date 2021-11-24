@@ -1,6 +1,7 @@
 package com.sda.demotycopy.jarekk.service;
 
-import com.sda.demotycopy.jarekk.controller.CreatePostResponse;
+import com.sda.demotycopy.jarekk.model.dto.CreatePostRequest;
+import com.sda.demotycopy.jarekk.model.dto.CreatePostResponse;
 import com.sda.demotycopy.jarekk.model.dao.PostEntity;
 import com.sda.demotycopy.jarekk.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,13 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public void addPostToPostEntity(CreatePostResponse postResponse){
+    public CreatePostResponse addPostToPostEntityAndReturnResponse(CreatePostRequest postRequest){
         PostEntity postToSave = new PostEntity();
-        postToSave.setTopText(postResponse.getTopText());
-        postToSave.setBottomText(postResponse.getBottomText());
-        postToSave.setImagePath(postResponse.getImagePath());
+        postToSave.setTopText(postRequest.getTopText());
+        postToSave.setBottomText(postRequest.getBottomText());
+        postToSave.setImagePath(postRequest.getImagePath());
         postRepository.save(postToSave);
+        CreatePostResponse postResponse = new CreatePostResponse(postToSave);
+        return postResponse;
     }
 }

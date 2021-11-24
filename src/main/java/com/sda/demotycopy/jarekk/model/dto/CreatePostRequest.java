@@ -1,4 +1,4 @@
-package com.sda.demotycopy.jarekk.controller;
+package com.sda.demotycopy.jarekk.model.dto;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
