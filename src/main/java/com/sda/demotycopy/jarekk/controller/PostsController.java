@@ -5,6 +5,7 @@ import com.sda.demotycopy.jarekk.model.dto.CreatePostResponse;
 import com.sda.demotycopy.jarekk.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,4 +22,11 @@ public class PostsController {
     public CreatePostResponse save(@RequestBody CreatePostRequest createPostRequest){
         return postService.addPostToPostEntityAndReturnResponse(createPostRequest);
     }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @GetMapping(path = "/api/posts/{postId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CreatePostResponse returnPostById(@PathVariable(name = "postId") Long postId){
+        return postService.returnPostFromEntity(postId);
+    }
+
 }
