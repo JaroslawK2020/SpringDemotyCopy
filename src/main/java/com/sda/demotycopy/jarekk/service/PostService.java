@@ -33,18 +33,12 @@ public class PostService {
     }
 
     public CreatePostResponse returnPostFromEntity(Long postId){
-//        if(postId > postToSave.getId()) { //TODO I have to check postEntity size
-            Supplier<ResponseStatusException> exceptionSupplier = new Supplier<ResponseStatusException>() {
-                @Override
-                public ResponseStatusException get() {
-                    return new ResponseStatusException(
-                            HttpStatus.NOT_FOUND,
-                            "Not found post with current id!"
-                    );
-                }
-            };
-//        }
-        return convertPostEntityToPostResponse(postRepository.searchById(postId).get(0));
+        return postRepository.searchById(postId)
+                .map(postEntity -> convertPostEntityToPostResponse(postEntity))
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Not found post with provided id"
+                ));
     }
 
     private CreatePostResponse convertPostEntityToPostResponse(PostEntity postEntity){
