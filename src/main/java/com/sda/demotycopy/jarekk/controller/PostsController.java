@@ -1,7 +1,8 @@
 package com.sda.demotycopy.jarekk.controller;
 
-import com.sda.demotycopy.jarekk.model.dto.CreatePostRequest;
-import com.sda.demotycopy.jarekk.model.dto.CreatePostResponse;
+import com.sda.demotycopy.jarekk.model.dto.get.GetPostResponse;
+import com.sda.demotycopy.jarekk.model.dto.post.CreatePostRequest;
+import com.sda.demotycopy.jarekk.model.dto.post.CreatePostResponse;
 import com.sda.demotycopy.jarekk.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,8 +26,12 @@ public class PostsController {
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @GetMapping(path = "/api/posts/{postId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CreatePostResponse returnPostById(@PathVariable(name = "postId") Long postId){
+    public GetPostResponse returnPostById(@PathVariable(name = "postId") Long postId){
         return postService.returnPostFromEntity(postId);
     }
+
+//    @ResponseStatus(HttpStatus.ACCEPTED)
+//    @GetMapping(path ="/api/posts/",produces = MediaType.APPLICATION_JSON_VALUE)
+//    public
 
 }
