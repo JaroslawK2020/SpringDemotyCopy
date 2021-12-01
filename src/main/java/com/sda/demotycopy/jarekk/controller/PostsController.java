@@ -1,5 +1,6 @@
 package com.sda.demotycopy.jarekk.controller;
 
+import com.sda.demotycopy.jarekk.model.dao.GetResponseList;
 import com.sda.demotycopy.jarekk.model.dto.get.GetPostResponse;
 import com.sda.demotycopy.jarekk.model.dto.post.CreatePostRequest;
 import com.sda.demotycopy.jarekk.model.dto.post.CreatePostResponse;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class PostsController {
@@ -30,8 +33,10 @@ public class PostsController {
         return postService.returnPostFromEntity(postId);
     }
 
-//    @ResponseStatus(HttpStatus.ACCEPTED)
-//    @GetMapping(path ="/api/posts/",produces = MediaType.APPLICATION_JSON_VALUE)
-//    public
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @GetMapping(path ="/api/posts/",produces = MediaType.APPLICATION_JSON_VALUE)
+    public GetResponseList returnAllPostsList(){
+        return postService.returnPostsListFromDataBase();
+    }
 
 }
