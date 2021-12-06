@@ -83,4 +83,20 @@ public class PostService {
         postRepository.save(postToUpdate);
         return new UpdateResponse(postEntity);
     }
+
+
+    public void deletePostById(Long postId) {
+        postRepository.searchById(postId)
+                .orElseThrow(new Supplier<ResponseStatusException>() {
+                    @Override
+                    public ResponseStatusException get() {
+                        return new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Not found post with provided id"
+                        );
+                    }
+                });
+        if(postRepository.existsById(postId))
+            postRepository.deleteById(postId);
+    }
 }

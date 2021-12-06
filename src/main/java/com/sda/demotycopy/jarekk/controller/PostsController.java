@@ -45,4 +45,9 @@ public class PostsController {
         return postService.updatePost(updateRequest,postId);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping(path = "/api/posts/{postId}")
+    public void deletePostWithProvidedId(@PathVariable(name = "postId") Long postId){
+        postService.deletePostById(postId);
+    }
 }
