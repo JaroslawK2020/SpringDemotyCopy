@@ -1,16 +1,16 @@
-package com.sda.demotycopy.jarekk.model.dto.get;
+package com.sda.demotycopy.jarekk.model.dto.put;
 
 import com.sda.demotycopy.jarekk.model.dao.PostEntity;
 import lombok.Data;
 
 @Data
-public class GetPostResponse {
+public class UpdateResponse {
     private Long id;
     private String topText;
     private String bottomText;
     private String imagePath;
 
-    public GetPostResponse(PostEntity postEntity) {
+    public UpdateResponse(PostEntity postEntity) {
         this.id = postEntity.getId();
         this.topText = postEntity.getTopText();
         this.bottomText = postEntity.getBottomText();

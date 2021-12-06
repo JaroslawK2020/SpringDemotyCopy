@@ -1,16 +1,16 @@
 package com.sda.demotycopy.jarekk.controller;
 
 import com.sda.demotycopy.jarekk.model.dao.GetResponseList;
-import com.sda.demotycopy.jarekk.model.dto.get.GetPostResponse;
+import com.sda.demotycopy.jarekk.model.dto.get.GetResponse;
 import com.sda.demotycopy.jarekk.model.dto.post.CreatePostRequest;
 import com.sda.demotycopy.jarekk.model.dto.post.CreatePostResponse;
+import com.sda.demotycopy.jarekk.model.dto.put.UpdateRequest;
+import com.sda.demotycopy.jarekk.model.dto.put.UpdateResponse;
 import com.sda.demotycopy.jarekk.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class PostsController {
@@ -27,16 +27,22 @@ public class PostsController {
         return postService.addPostToPostEntityAndReturnResponse(createPostRequest);
     }
 
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/api/posts/{postId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public GetPostResponse returnPostById(@PathVariable(name = "postId") Long postId){
+    public GetResponse returnPostById(@PathVariable(name = "postId") Long postId){
         return postService.returnPostFromEntity(postId);
     }
 
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(path ="/api/posts/",produces = MediaType.APPLICATION_JSON_VALUE)
     public GetResponseList returnAllPostsList(){
         return postService.returnPostsListFromDataBase();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping(path = "/api/posts/{postId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UpdateResponse updatePostWithProvidedId(@RequestBody UpdateRequest updateRequest, @PathVariable(name = "postId") Long postId){
+        return postService.updatePost(updateRequest,postId);
     }
 
 }

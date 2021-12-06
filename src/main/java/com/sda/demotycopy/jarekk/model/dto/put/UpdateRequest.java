@@ -1,9 +1,9 @@
-package com.sda.demotycopy.jarekk.model.dto.post;
+package com.sda.demotycopy.jarekk.model.dto.put;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-public class CreatePostRequest {
+public class UpdateRequest {
     private String topText;
     private String bottomText;
     private String imagePath;
