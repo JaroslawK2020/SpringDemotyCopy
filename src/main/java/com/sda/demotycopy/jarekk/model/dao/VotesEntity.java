@@ -10,25 +10,21 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "postsDB")
-public class PostEntity {
+@Table(name = "votesDB")
+public class VotesEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column
-    private String topText;
+    @OneToOne
+//    @PrimaryKeyJoinColumn
+    private PostEntity postEntity;
 
     @Column
-    private String bottomText;
+    private VotesType voteUp;
 
     @Column
-    private String imagePath;
-
-    @OneToOne(mappedBy = "postEntity",cascade = CascadeType.ALL)
-//    @MapsId
-//    @JoinColumn(name = "posts_votes")
-    private VotesEntity votesEntity;
+    private VotesType voteDown;
 }
