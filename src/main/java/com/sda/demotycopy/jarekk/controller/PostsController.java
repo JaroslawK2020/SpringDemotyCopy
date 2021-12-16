@@ -56,4 +56,11 @@ public class PostsController {
     public void setPostByIdVotesUp(@PathVariable(name = "postId") Long postId){
         postService.setPostVotesUp(postId);
     }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(path = "/api/posts/{postId}/reactions/votesDown")
+    public void setPostByIdVotesDown(@PathVariable(name = "postId") Long postId){
+        postService.setPostVotesDown(postId);
+    }
+
 }

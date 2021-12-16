@@ -111,7 +111,7 @@ public class PostService {
             postRepository.deleteById(postId);
     }
 
-    public void setPostVotesUp(Long postId) {//todo i have to add exception when post by id does not exist
+    public void setPostVotesUp(Long postId) {
         votesRepository.findById(postId)
                 .orElseThrow(new Supplier<ResponseStatusException>() {
                     @Override
@@ -123,10 +123,29 @@ public class PostService {
                     }
                 });
         if(votesRepository.existsById(postId)) {
-            VotesEntity votesEntity = votesRepository.getById(postId);
-            Long currentVotesUp = votesEntity.getVoteUp();
-            votesEntity.setVoteUp(++currentVotesUp);
-            votesRepository.save(votesEntity);
+            VotesEntity votesEntityUpVotes = votesRepository.getById(postId);
+            Long currentVotesUp = votesEntityUpVotes.getVoteUp();
+            votesEntityUpVotes.setVoteUp(++currentVotesUp);
+            votesRepository.save(votesEntityUpVotes);
+        }
+    }
+
+    public void setPostVotesDown(Long postId) {
+        votesRepository.findById(postId)
+                .orElseThrow(new Supplier<ResponseStatusException>() {
+                    @Override
+                    public ResponseStatusException get() {
+                        return new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Not found post with provided id"
+                        );
+                    }
+                });
+        if(votesRepository.existsById(postId)) {
+            VotesEntity votesEntityDownVotes = votesRepository.getById(postId);
+            Long currentVotesDown = votesEntityDownVotes.getVoteDown();
+            votesEntityDownVotes.setVoteDown(++currentVotesDown);
+            votesRepository.save(votesEntityDownVotes);
         }
     }
 }
