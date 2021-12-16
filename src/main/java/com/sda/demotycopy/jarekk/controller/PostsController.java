@@ -50,4 +50,10 @@ public class PostsController {
     public void deletePostWithProvidedId(@PathVariable(name = "postId") Long postId){
         postService.deletePostById(postId);
     }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(path = "/api/posts/{postId}/reactions/votesUp")
+    public void setPostByIdVotesUp(@PathVariable(name = "postId") Long postId){
+        postService.setPostVotesUp(postId);
+    }
 }

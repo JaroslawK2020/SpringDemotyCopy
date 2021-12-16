@@ -14,17 +14,15 @@ import javax.persistence.*;
 public class VotesEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @OneToOne
-//    @PrimaryKeyJoinColumn
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     private PostEntity postEntity;
 
     @Column
-    private VotesType voteUp;
+    private Long voteUp;
 
     @Column
-    private VotesType voteDown;
+    private Long voteDown;
 }

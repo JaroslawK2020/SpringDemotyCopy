@@ -26,9 +26,4 @@ public class PostEntity {
 
     @Column
     private String imagePath;
-
-    @OneToOne(mappedBy = "postEntity",cascade = CascadeType.ALL)
-//    @MapsId
-//    @JoinColumn(name = "posts_votes")
-    private VotesEntity votesEntity;
 }

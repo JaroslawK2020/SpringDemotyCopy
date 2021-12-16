@@ -1,6 +1,7 @@
 package com.sda.demotycopy.jarekk.service;
 
 import com.sda.demotycopy.jarekk.model.dao.GetResponseList;
+import com.sda.demotycopy.jarekk.model.dao.VotesEntity;
 import com.sda.demotycopy.jarekk.model.dto.get.GetResponse;
 import com.sda.demotycopy.jarekk.model.dto.post.CreatePostRequest;
 import com.sda.demotycopy.jarekk.model.dto.post.CreatePostResponse;
@@ -8,6 +9,7 @@ import com.sda.demotycopy.jarekk.model.dao.PostEntity;
 import com.sda.demotycopy.jarekk.model.dto.put.UpdateRequest;
 import com.sda.demotycopy.jarekk.model.dto.put.UpdateResponse;
 import com.sda.demotycopy.jarekk.repository.PostRepository;
+import com.sda.demotycopy.jarekk.repository.VotesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,9 +22,11 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final VotesRepository votesRepository;
     @Autowired
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, VotesRepository votesRepository) {
         this.postRepository = postRepository;
+        this.votesRepository = votesRepository;
     }
 
     public CreatePostResponse addPostToPostEntityAndReturnResponse(CreatePostRequest postRequest) {
@@ -31,6 +35,13 @@ public class PostService {
         postToSave.setBottomText(postRequest.getBottomText());
         postToSave.setImagePath(postRequest.getImagePath());
         postRepository.save(postToSave);
+
+        VotesEntity votesEntity = new VotesEntity();
+        votesEntity.setVoteUp(0l);
+        votesEntity.setVoteDown(0l);
+        votesEntity.setPostEntity(postToSave);
+        votesRepository.save(votesEntity);
+
         return convertPostEntityToPostResponse(postToSave);
     }
 
@@ -98,5 +109,24 @@ public class PostService {
                 });
         if(postRepository.existsById(postId))
             postRepository.deleteById(postId);
+    }
+
+    public void setPostVotesUp(Long postId) {//todo i have to add exception when post by id does not exist
+        votesRepository.findById(postId)
+                .orElseThrow(new Supplier<ResponseStatusException>() {
+                    @Override
+                    public ResponseStatusException get() {
+                        return new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Not found post with provided id"
+                        );
+                    }
+                });
+        if(votesRepository.existsById(postId)) {
+            VotesEntity votesEntity = votesRepository.getById(postId);
+            Long currentVotesUp = votesEntity.getVoteUp();
+            votesEntity.setVoteUp(++currentVotesUp);
+            votesRepository.save(votesEntity);
+        }
     }
 }
